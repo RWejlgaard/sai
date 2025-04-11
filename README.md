@@ -4,6 +4,36 @@ A command-line utility that processes input streams through OpenAI's API, simila
 
 ## Installation
 
+### Pre-built binaries (recommended)
+
+Download the latest release for your platform from the [releases page](https://github.com/yourusername/sai/releases/latest):
+
+```bash
+# For macOS (Intel)
+curl -L https://github.com/yourusername/sai/releases/latest/download/sai-darwin-amd64 -o sai
+chmod +x sai
+sudo mv sai /usr/local/bin/
+
+# For macOS (Apple Silicon)
+curl -L https://github.com/yourusername/sai/releases/latest/download/sai-darwin-arm64 -o sai
+chmod +x sai
+sudo mv sai /usr/local/bin/
+
+# For Linux (x86_64)
+curl -L https://github.com/yourusername/sai/releases/latest/download/sai-linux-amd64 -o sai
+chmod +x sai
+sudo mv sai /usr/local/bin/
+
+# For Linux (ARM64)
+curl -L https://github.com/yourusername/sai/releases/latest/download/sai-linux-arm64 -o sai
+chmod +x sai
+sudo mv sai /usr/local/bin/
+```
+
+For Windows users, download the appropriate `.exe` file from the releases page and add it to your PATH.
+
+### Building from source
+
 1. Clone this repository
 2. Build and install:
    ```bash
@@ -79,4 +109,20 @@ echo "Hello" | sai -k 'your-alternative-api-key'
 - Clean: `make clean`
 - Test: `make test`
 - Format code: `make format`
-- Lint code: `make lint` 
+- Lint code: `make lint`
+
+## Releasing
+
+To create a new release:
+
+1. Tag the commit:
+   ```bash
+   git tag -a v1.0.0 -m "Release v1.0.0"
+   ```
+
+2. Push the tag:
+   ```bash
+   git push origin v1.0.0
+   ```
+
+This will trigger the GitHub Actions workflow to build and release the binaries. 

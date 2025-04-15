@@ -10,22 +10,22 @@ Download the latest release for your platform from the [releases page](https://g
 
 ```bash
 # For macOS (Intel)
-curl -L https://github.com/yourusername/sai/releases/latest/download/sai-darwin-amd64 -o sai
+curl -L https://github.com/rwejlgaard/sai/releases/latest/download/sai-darwin-amd64 -o sai
 chmod +x sai
 sudo mv sai /usr/local/bin/
 
 # For macOS (Apple Silicon)
-curl -L https://github.com/yourusername/sai/releases/latest/download/sai-darwin-arm64 -o sai
+curl -L https://github.com/rwejlgaard/sai/releases/latest/download/sai-darwin-arm64 -o sai
 chmod +x sai
 sudo mv sai /usr/local/bin/
 
 # For Linux (x86_64)
-curl -L https://github.com/yourusername/sai/releases/latest/download/sai-linux-amd64 -o sai
+curl -L https://github.com/rwejlgaard/sai/releases/latest/download/sai-linux-amd64 -o sai
 chmod +x sai
 sudo mv sai /usr/local/bin/
 
 # For Linux (ARM64)
-curl -L https://github.com/yourusername/sai/releases/latest/download/sai-linux-arm64 -o sai
+curl -L https://github.com/rwejlgaard/sai/releases/latest/download/sai-linux-arm64 -o sai
 chmod +x sai
 sudo mv sai /usr/local/bin/
 ```
@@ -43,7 +43,7 @@ For Windows users, download the appropriate `.exe` file from the releases page a
 
 Or install directly using Go:
 ```bash
-go install github.com/yourusername/sai/src/cmd/sai@latest
+go install github.com/rwejlgaard/sai/src/cmd/sai@latest
 ```
 
 ## Usage

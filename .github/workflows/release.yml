@@ -56,7 +56,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: binaries
+          name: binary-${{ matrix.goos }}-${{ matrix.goarch }}
           path: dist/${{ matrix.binary_name }}
           retention-days: 1
 
@@ -69,7 +69,7 @@ jobs:
       - name: Download All Artifacts
         uses: actions/download-artifact@v4
         with:
-          name: binaries
+          pattern: binary-*
           path: dist
 
       - name: Create Checksums

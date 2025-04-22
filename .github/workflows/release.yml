@@ -9,8 +9,36 @@ permissions:
   contents: write # Needed for creating releases
 
 jobs:
-  release:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            goos: linux
+            goarch: amd64
+            binary_name: sai-linux-amd64
+          - os: ubuntu-latest
+            goos: linux
+            goarch: arm64
+            binary_name: sai-linux-arm64
+          - os: macos-latest
+            goos: darwin
+            goarch: amd64
+            binary_name: sai-darwin-amd64
+          - os: macos-latest
+            goos: darwin
+            goarch: arm64
+            binary_name: sai-darwin-arm64
+          - os: windows-latest
+            goos: windows
+            goarch: amd64
+            binary_name: sai-windows-amd64.exe
+          - os: windows-latest
+            goos: windows
+            goarch: arm64
+            binary_name: sai-windows-arm64.exe
+
     steps:
       - uses: actions/checkout@v4
 
@@ -20,20 +48,32 @@ jobs:
           go-version: '1.22'
           cache: true
 
-      - name: Build Binaries
+      - name: Build Binary
         run: |
-          # Create dist directory
           mkdir -p dist
+          GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} go build -o dist/${{ matrix.binary_name }} ./src/cmd/sai
 
-          # Build for different OS/ARCH combinations
-          GOOS=linux GOARCH=amd64 go build -o dist/sai-linux-amd64 ./src/cmd/sai
-          GOOS=linux GOARCH=arm64 go build -o dist/sai-linux-arm64 ./src/cmd/sai
-          GOOS=darwin GOARCH=amd64 go build -o dist/sai-darwin-amd64 ./src/cmd/sai
-          GOOS=darwin GOARCH=arm64 go build -o dist/sai-darwin-arm64 ./src/cmd/sai
-          GOOS=windows GOARCH=amd64 go build -o dist/sai-windows-amd64.exe ./src/cmd/sai
-          GOOS=windows GOARCH=arm64 go build -o dist/sai-windows-arm64.exe ./src/cmd/sai
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: binaries
+          path: dist/${{ matrix.binary_name }}
+          retention-days: 1
 
-          # Create checksums
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: binaries
+          path: dist
+
+      - name: Create Checksums
+        run: |
           cd dist
           sha256sum * > checksums.txt
           cd ..
